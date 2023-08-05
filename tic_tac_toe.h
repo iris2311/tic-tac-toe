@@ -1,5 +1,7 @@
 
 #include <set>
+
+
 enum player{O=0,X=1, e=2};
 
 static const char *enum_string[] = { "O", "X", "e" };
@@ -14,12 +16,17 @@ class Game{
 
     private:
     char board[3][3];
+    std::string input;
     std::set <int> valid_moves;
     int moves=0;
     enum player winner;
 
     public:
+    player current_player;
+    int current_move;
+
     Game();
+    void begin();
     int number_of_moves();
     bool victory();
     bool game_end();
@@ -30,6 +37,24 @@ class Game{
     ~Game();
 
 };
+
+void Game::begin(){
+
+   std::cout<<"When playing, press numbers from 1 to 9."<<std::endl;
+
+   std::cout<<"Who will play first? Press 'X' for X and 'O' for x"<<std::endl;
+   getline(std::cin,input);
+   if(input=="x")
+      input="X";
+    if(input=="o")
+        input="0";
+
+    if(input=="O")
+        current_player=O;
+    else
+        current_player=X;
+
+}
 
 int Game::number_of_moves(){
 
@@ -90,8 +115,16 @@ bool Game:: victory() {
 
 bool Game::game_end(){
 
-    if (victory()==true || number_of_moves()==9)
+    if (victory()==true){
+
+        std::cout<<"Winner is "<<convert_to_enum(current_player)<<"!"<<std::endl;
         return true;
+    }
+
+    if(number_of_moves()==9){
+        std::cout<<"It's a tie!"<<std::endl;
+        return true;
+    }
 
     return false;
     
@@ -102,10 +135,15 @@ void Game::print_board(){
 
     for (auto i=0; i<3; ++i){
         for(auto j=0; j<3; ++j){
-            if(board[i][j]==2)
-                std::cout<<" - "<<" ";
+            if(board[i][j]==2){
+                std::cout<<std::setw(5)<<"-";
+
+            }
+                
             else
-                 std::cout<<convert_to_enum(board[i][j])<<"  ";
+                 {
+                    std::cout<<std::setw(5)<<convert_to_enum(board[i][j]);
+                 }
         }
 
         std::cout<<std::endl;
