@@ -9,6 +9,11 @@ int main(void){
 
    Game game;
 
+   while(!game.game_end()){
+    
+    
+   }
+
 
     return 0;
 }
