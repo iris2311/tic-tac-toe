@@ -151,6 +151,7 @@ void Game::print_board(){
 
 }
 
+
 void Game::update(player current_player, int move){
 
     int row, column;
