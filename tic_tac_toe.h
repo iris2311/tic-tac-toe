@@ -1,5 +1,8 @@
 
 #include <set>
+#include <string>
+#include <cctype>
+#include <algorithm>
 #include "enum.h"
 class Game{
 
@@ -16,6 +19,8 @@ class Game{
 
     Game();
     void begin();
+    void begin_message();
+    void first_player_setup();
     int number_of_moves();
     bool victory();
     bool game_end();
@@ -27,23 +32,31 @@ class Game{
 
 };
 
-void Game::begin(){
+void Game::begin_message(){
 
-   std::cout<<"When playing, press numbers from 1 to 9."<<std::endl;
-
-   std::cout<<"Who will play first? Press 'X' for X and 'O' for x"<<std::endl;
-   getline(std::cin,input);
-   if(input=="x")
-      input="X";
-    if(input=="o")
-        input="0";
-
-    if(input=="O")
-        current_player=O;
-    else
-        current_player=X;
+    std::cout<<"When playing, press numbers from 1 to 9."<<std::endl;
+    std::cout<<"Who will play first? Press 'X' for X and 'O' for x"<<std::endl;
 
 }
+
+void Game::begin(){
+
+   begin_message();
+   getline(std::cin,input);
+   first_player_setup();
+
+}
+
+void Game::first_player_setup(){
+    
+    transform(input.begin(), input.end(), input.begin(), ::toupper);
+    if(input=="X")
+        current_player=X;
+    else
+        current_player=O;
+
+}
+
 
 int Game::number_of_moves(){
 
@@ -124,15 +137,11 @@ void Game::print_board(){
 
     for (auto i=0; i<3; ++i){
         for(auto j=0; j<3; ++j){
-            if(board[i][j]==2){
+            if(board[i][j]==2)
                 std::cout<<std::setw(5)<<"-";
-
-            }
                 
             else
-                 {
-                    std::cout<<std::setw(5)<<convert_to_enum(board[i][j]);
-                 }
+                std::cout<<std::setw(5)<<convert_to_enum(board[i][j]);
         }
 
         std::cout<<std::endl;

@@ -1,8 +1,7 @@
 
 #include <stdlib.h>
-#include<string>
 #include <iostream>
-#include <algorithm>
+#include <string>
 #include <iomanip>
 #include "tic_tac_toe.h"
 
