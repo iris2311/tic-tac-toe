@@ -5,48 +5,25 @@
 #include <iomanip>
 #include "tic_tac_toe.h"
 
-
 using namespace std;
 
-int main(void){
+int main(void)
+{
 
-   Game game;
-   
-   game.begin();
+  Game game;
+  int player_number = 1;
 
-   while(!game.game_end()){
+  game.begin();
 
-    cout<<"Player 1, it is your turn."<<endl;
-    cin>>game.current_move;
-    if(!game.valid_move(game.current_move)){
-        while(!game.valid_move(game.current_move))
-        { cout<<"Invalid move, try again."<<endl;
-          cin>>game.current_move;
-        }
-    }
+  while (!game.game_end())
+  {
 
-    cout<<endl;
-
+    game.player_move(player_number % 2);
     game.update(game.current_player, game.current_move);
     game.print_board();
-    if (game.game_end())
-        break;
+    game.current_player = game.change_player(game.current_player);
+    player_number++;
+  }
 
-    cout<<"Player 2, it is your turn."<<endl;
-    game.current_player=game.change_player(game.current_player);
-    cin>>game.current_move;
-    if(!game.valid_move(game.current_move)){
-        while(!game.valid_move(game.current_move))
-        { cout<<"Invalid move, try again."<<endl;
-          cin>>game.current_move;
-        }
-    }
-    game.update(game.current_player, game.current_move);
-    cout<<endl;
-    game.print_board();
-    game.current_player=game.change_player(game.current_player);
-   }
-
-
-    return 0;
+  return 0;
 }
